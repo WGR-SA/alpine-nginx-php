@@ -21,9 +21,9 @@ services:
       - "8101:80"
     environment:
       PMA_HOST: db
-      PMA_USER: app
-      PMA_PASSWORD: app
-      MYSQL_ROOT_PASSWORD: app
+      PMA_USER: root
+      PMA_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
   db:
     image: mysql:8
     ports:
