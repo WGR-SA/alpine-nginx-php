@@ -75,4 +75,4 @@ If you want to extend or customize that you can do so by mounting a configuratio
 
 ## Acknowledgements
 
-This image was inspired by [TrafeX/docker-php-nginx](https://github.com/TrafeX/docker-php-nginx) and [this subsequent fork](https://github.com/khromov/docker-php-nginx).
+This image was a fork of [khromov/alpine-nginx-php8](https://github.com/khromov/alpine-nginx-php8).
