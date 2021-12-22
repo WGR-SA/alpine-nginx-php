@@ -30,20 +30,14 @@ Fetch the prebuilt image in your custom images:
 GitHub (preferred):
 
 ```
-docker pull ghcr.io/khromov/alpine-nginx-php8/alpine-nginx-php8:latest
+git clone git@github.com:WGR-SA/alpine-nginx-php8.git
 ```
-
-If you get "no basic auth credentials", see [this page](https://docs.github.com/en/free-pro-team@latest/packages/using-github-packages-with-your-projects-ecosystem/configuring-docker-for-use-with-github-packages).
-
-
-Docker Hub:
-
+#### Configure a little
 ```
-docker pull khromov/alpine-nginx-php8
+cd alpine-nginx-php8
+cp ./config/localhost.default.conf ./config/localhost.conf
+cp ./.env.default ./.env
 ```
-
-Not preferred since the image is not up to date due to Docker removing free build CI. PR welcome to add a GitHub action for pushing images to Docker Hub directly.
-
 
 #### Start Nginx, PHP and MySQL via docker-compose
 
@@ -53,34 +47,27 @@ This is convenient for developing Laravel, WordPress or Drupal sites. It include
 docker-compose up
 ```
 
-Now you can access your site at http://localhost:8080 and the MySQL database at `db:3306`.
+Now you can access your site at http://localhost:8100 and the MySQL database at `db:3306`.
 
-The folder `./src-compose` will be created and you can put your project files there.
+You can mount your own dev folder by editing the `./env` file and change the ROOT environment var; example:
+
+```
+ROOT="/Users/foo/Sites/myWebApp.com/"
+```
 
 The urls are:
-* Web: http://localhost:8080
-* phpMyAdmin: http://localhost:8081
-
-###### File permission issues
-
-If you copied files into `./src-compose` you need to run:
-
-```
-sudo chown -R nobody:nogroup ./src-compose
-sudo chmod -R 777 ./src-compose
-```
-
-This makes sure that the files have the correct owner inside the container but remain writable outside of it.
+* Web: http://localhost:8100
+* phpMyAdmin: http://localhost:8101
 
 #### Quick build / run
 
 ```
 docker build . -t php8
-docker run -p 8080:8080 -t php8
+docker run -p 8100:8080 -t php8
 ```
 
 Go to:  
-http://localhost:8080/
+http://localhost:8100/
 
 ## Configuration
 In [config/](config/) you'll find the default configuration files for Nginx, PHP and PHP-FPM.
