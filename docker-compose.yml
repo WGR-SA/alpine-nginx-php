@@ -6,18 +6,16 @@ services:
     depends_on:
       - db
     volumes:
-      - ~/Sites:/data01/sites
-      - ./bin:/data01/bin
-      - ./sites-available:/data01/nginx/sites-available
+      - "${ROOT}:/var/www/ROOT"
     build: .
     ports:
-      - "8080:8080"
+      - "8100:8080"
     environment:
       FOO: bar
   db:
     image: mysql:8
     ports:
-      - "8089:3306"
+      - "8102:3306"
     command: --default-authentication-plugin=mysql_native_password
     volumes:
       - ./data:/var/lib/mysql
@@ -33,7 +31,7 @@ services:
       - db
     image: phpmyadmin/phpmyadmin
     ports:
-      - "8081:80"
+      - "8101:80"
     environment:
       PMA_HOST: db
       PMA_USER: app

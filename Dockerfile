@@ -36,7 +36,7 @@ RUN apk --no-cache add php8=${PHP_VERSION} \
     php8-xmlwriter \
     php8-tokenizer \
     php8-pdo_mysql \
-    nginx supervisor curl tzdata htop mysql-client dcron nano openrc
+    nginx supervisor curl tzdata htop mysql-client dcron nano
 
 # Symlink php8 => php
 RUN ln -s /usr/bin/php8 /usr/bin/php
@@ -47,8 +47,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
 
 # Configure nginx
 COPY config/nginx.conf /etc/nginx/nginx.conf
-RUN mkdir -p /data01/nginx/sites-enabled
-COPY sites-available/default.conf /data01/nginx/sites-enabled/default.conf
+COPY config/localhost.conf /etc/nginx/localhost.conf
 
 # Configure PHP-FPM
 COPY config/fpm-pool.conf /etc/php8/php-fpm.d/www.conf
@@ -57,27 +56,21 @@ COPY config/php.ini /etc/php8/conf.d/custom.ini
 # Configure supervisord
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# add nginx sites & bin to PATH
-ENV PATH=$PATH:/data01/nginx/sites-available
-ENV PATH=$PATH:/data01/bin
-
 # Setup document root
-RUN mkdir -p /var/www/html
+RUN mkdir -p /var/www/ROOT
 
 # Make sure files/folders needed by the processes are accessable when they run under the nobody user
-RUN chown -R nobody.nobody /var/www/html && \
+RUN chown -R nobody.nobody /var/www/ROOT && \
   chown -R nobody.nobody /run && \
   chown -R nobody.nobody /var/lib/nginx && \
-  chown -R nobody.nobody /var/log/nginx && \
-  chown -R nobody.nobody /data01/nginx/sites-enabled && \
-  chown -R nobody.nobody /etc/nginx/nginx.conf
+  chown -R nobody.nobody /var/log/nginx
 
 # Switch to use a non-root user from here on
 USER nobody
 
 # Add application
 WORKDIR /data01/sites
-COPY --chown=nobody src/ /var/www/html/
+COPY --chown=nobody src/ /var/www/ROOT/
 
 # Expose the port nginx is reachable on
 EXPOSE 8080
@@ -86,4 +79,4 @@ EXPOSE 8080
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
 # Configure a healthcheck to validate that everything is up&running
-# HEALTHCHECK --timeout=10s CMD curl --silent --fail http://127.0.0.1:8080/fpm-ping
+HEALTHCHECK --timeout=10s CMD curl --silent --fail http://127.0.0.1:8080/fpm-ping
