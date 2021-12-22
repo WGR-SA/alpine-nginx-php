@@ -59,8 +59,12 @@ COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 # Setup document root
 RUN mkdir -p /var/www/ROOT
 
+# Setup nobody home
+RUN mkdir -p /var/www/nobody
+
 # Make sure files/folders needed by the processes are accessable when they run under the nobody user
 RUN chown -R nobody.nobody /var/www/ROOT && \
+  chown -R nobody.nobody /var/www/nobody && \
   chown -R nobody.nobody /run && \
   chown -R nobody.nobody /var/lib/nginx && \
   chown -R nobody.nobody /var/log/nginx
@@ -69,7 +73,7 @@ RUN chown -R nobody.nobody /var/www/ROOT && \
 USER nobody
 
 # Add application
-WORKDIR /data01/sites
+WORKDIR /var/www/ROOT
 COPY --chown=nobody src/ /var/www/ROOT/
 
 # Expose the port nginx is reachable on

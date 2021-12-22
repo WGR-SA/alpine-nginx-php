@@ -1,4 +1,5 @@
 data/
 src-compose/
+home/
 config/localhost.conf
 *.env
