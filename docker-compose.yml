@@ -2,11 +2,13 @@ version: "3.3"
 
 services:
   web:
-    container_name: khromov_php8
+    # container_name: php8
     depends_on:
       - db
     volumes:
-      - ./src-compose:/var/www/html
+      - ~/Sites:/data01/sites
+      - ./bin:/data01/bin
+      - ./sites-available:/data01/nginx/sites-available
     build: .
     ports:
       - "8080:8080"
@@ -14,6 +16,8 @@ services:
       FOO: bar
   db:
     image: mysql:8
+    ports:
+      - "8089:3306"
     command: --default-authentication-plugin=mysql_native_password
     volumes:
       - ./data:/var/lib/mysql

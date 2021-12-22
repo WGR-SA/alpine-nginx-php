@@ -1,2 +1,4 @@
 data/
 src-compose/
+sites-available/*
+!sites-available/default.conf
