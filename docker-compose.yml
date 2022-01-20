@@ -1,16 +1,32 @@
 version: "3.3"
 
 services:
-  web:
+  web8:
     # container_name: php8
     depends_on:
       - db
     volumes:
-      - "${ROOT}:/var/www/ROOT"
+      - "${ROOT8}:/var/www/ROOT"
       - ./home:/var/www/nobody
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile--web8
     ports:
-      - "8100:8080"
+      - "8108:8080"
+    environment:
+      HOME: /var/www/nobody
+  web7:
+    # container_name: php8
+    depends_on:
+      - db
+    volumes:
+      - "${ROOT7}:/var/www/ROOT"
+      - ./home:/var/www/nobody
+    build:
+      context: .
+      dockerfile: Dockerfile--web7
+    ports:
+      - "8107:8080"
     environment:
       HOME: /var/www/nobody
   pma:
