@@ -41,6 +41,7 @@ services:
       PMA_PASSWORD: root
       MYSQL_ROOT_PASSWORD: root
   db:
+    platform: linux/x86_64
     image: mysql:8
     ports:
       - "8102:3306"
