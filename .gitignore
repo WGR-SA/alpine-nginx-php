@@ -3,3 +3,5 @@ src-compose/
 home/
 config/localhost.conf
 *.env
+.DS_Store
+logs/
