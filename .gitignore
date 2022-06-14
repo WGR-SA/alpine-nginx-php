@@ -2,6 +2,8 @@ data/
 src-compose/
 home/
 config/localhost.conf
+config/localhost7.conf
+config/localhost8.conf
 *.env
 .DS_Store
 logs/
