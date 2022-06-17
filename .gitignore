@@ -7,3 +7,4 @@ config/localhost8.conf
 *.env
 .DS_Store
 logs/
+.aws/
