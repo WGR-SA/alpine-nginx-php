@@ -8,3 +8,4 @@ config/localhost8.conf
 .DS_Store
 logs/
 .aws/
+.ssh/

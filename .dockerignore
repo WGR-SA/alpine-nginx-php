@@ -2,3 +2,4 @@ data/
 src-compose/
 home/
 .aws/
+.ssh/

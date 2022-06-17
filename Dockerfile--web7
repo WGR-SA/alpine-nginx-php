@@ -64,11 +64,6 @@ RUN mkdir -p /var/www/ROOT
 # Setup nobody home
 RUN mkdir -p /var/www/nobody
 
-#AWS
-RUN mkdir -p /var/www/nobody.aws
-COPY config/.aws/config /var/www/nobody/.aws/config
-COPY config/.aws/credentials /var/www/nobody/.aws/credentials
-
 # Make sure files/folders needed by the processes are accessable when they run under the nobody user
 RUN chown -R nobody.nobody /var/www/ROOT && \
   chown -R nobody.nobody /var/www/nobody && \
