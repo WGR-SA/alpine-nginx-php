@@ -11,6 +11,7 @@ ENV PAGER="more"
 RUN apk --no-cache add curl \
     php7=${PHP_VERSION} \
     php7-ctype \
+    php7-mcrypt \
     php7-curl \
     php7-dom \
     php7-exif \
