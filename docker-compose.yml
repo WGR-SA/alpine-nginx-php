@@ -29,6 +29,20 @@ services:
       - "8107:8107"
     environment:
       HOME: /var/www/nobody
+  web5:
+    # container_name: php5
+    depends_on:
+      - db
+    volumes:
+      - "${ROOT5}:/var/www/html"
+      - ./home:/var/www/home
+    build:
+      context: .
+      dockerfile: Dockerfile--web5
+    ports:
+      - "8105:80"
+    environment:
+      HOME: /var/www/home
   pma:
     depends_on:
       - db
