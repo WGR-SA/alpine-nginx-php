@@ -69,7 +69,7 @@ RUN apk add --update --no-cache bash \
 	php5-mysqli \
 	apache2 \
 	libxml2-dev \
-	apache2-utils
+	apache2-utils nano
 
 RUN apk add --update --no-cache imagemagick-dev \
 	ffmpeg
